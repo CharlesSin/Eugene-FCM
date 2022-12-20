@@ -20,16 +20,12 @@ app.use(cors(corsOptionsDelegate));
 app.use(express.json({ extended: false }));
 
 app.get("/", (req, res) => {
-  const title = process.env.TITLE;
-  const description = process.env.DESCRIPTION;
-  res.status(200).json({ title, description });
+  res.status(200).json({ msg: "done" });
 });
 
-app.post("/push-notification", (req, res) => {
-  const title = process.env.TITLE;
-  const description = process.env.DESCRIPTION;
+app.post("/pushNotification", (req, res) => {
   const msg = "HELLO WORLD";
-  res.status(200).json({ title, description, msg });
+  res.status(200).json({ msg });
 });
 
 const PORT = process.env.PORT || 8282;
