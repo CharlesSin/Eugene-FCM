@@ -24,8 +24,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/pushNotification", (req, res) => {
+  const { data } = req.body;
   const msg = "HELLO WORLD";
-  res.status(200).json({ msg });
+  res.status(200).json({ msg, data });
 });
 
 const PORT = process.env.PORT || 8282;
