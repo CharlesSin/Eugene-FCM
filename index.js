@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const cors = require("cors");
 const app = express();
 
@@ -15,10 +16,10 @@ const corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions); // callback expects two parameters: error and options
 };
 
-app.use(cors(corsOptionsDelegate));
-
 app.use(express.json({ extended: false }));
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.status(200).json({ msg: "done" });
