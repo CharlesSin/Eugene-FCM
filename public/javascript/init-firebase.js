@@ -6,8 +6,11 @@ function fetchGetMethod(url) {
 }
 
 setTimeout(async () => {
-  console.log(await fetchGetMethod("https://eugene-fcm.vercel.app/firebaseConfigKey"));
-  console.log(await fetchGetMethod("https://eugene-fcm.vercel.app/firebasevapidkey"));
+  const { config: configKey } = await fetchGetMethod("https://eugene-fcm.vercel.app/firebaseConfigKey");
+  const { config: vapidKey } = await fetchGetMethod("https://eugene-fcm.vercel.app/firebasevapidkey");
+
+  console.log(configKey);
+  console.log(vapidKey);
 
   const firebaseConfig = {
     apiKey: "AIzaSyAen2FnXy-gKlxgeHZSgTpr-dAUsD9X7bM",
@@ -40,7 +43,9 @@ setTimeout(async () => {
       .then((currentToken) => {
         if (currentToken) {
           document.querySelector("#token").textContent = currentToken;
-          firebase.firestore().collection("online-users")
+          firebase
+            .firestore()
+            .collection("online-users")
             .add({
               token: `${currentToken}`,
               visitor: `${visitorId}`,
