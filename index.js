@@ -5,7 +5,7 @@ const app = express();
 
 require("dotenv").config();
 
-const allowlist = ["http://127.0.0.1:3000", "http://localhost:3000"];
+const allowlist = ["http://127.0.0.1:3000", "http://localhost:3000", "https://charles-fcm-web.netlify.app"];
 const corsOptionsDelegate = function (req, callback) {
   let corsOptions;
   if (allowlist.indexOf(req.header("Origin")) !== -1) {
