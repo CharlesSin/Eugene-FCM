@@ -5,17 +5,6 @@ const app = express();
 
 require("dotenv").config();
 
-// const allowlist = ["http://127.0.0.1:3000", "http://localhost:3000", "https://charles-fcm-web.netlify.app"];
-// const corsOptionsDelegate = function (req, callback) {
-//   let corsOptions;
-//   if (allowlist.indexOf(req.header("Origin")) !== -1) {
-//     corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
-//   } else {
-//     corsOptions = { origin: false }; // disable CORS for this request
-//   }
-//   callback(null, corsOptions); // callback expects two parameters: error and options
-// };
-
 app.use(express.json({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -23,6 +12,23 @@ app.use(cors());
 
 app.get("/", (req, res) => {
   res.status(200).json({ msg: "done" });
+});
+
+app.get("/firebaseConfigKey", (req, res) => {
+  const json = {
+    apiKey: "AIzaSyAen2FnXy-gKlxgeHZSgTpr-dAUsD9X7bM",
+    projectId: "eugene-fcm",
+    messagingSenderId: "909731893166",
+    appId: "1:909731893166:web:b18c5a0cdc2fcff00c823f",
+  };
+  res.status(200).json({ config: json });
+});
+
+app.get("/firebasevapidkey", (req, res) => {
+  const json = {
+    vapidKey: "BI4vxOcRLneYRWuOhoaXWLTdYmY4xChF_XudMLNyW1wreBM9kE3bdEA66AAiQPRuTvo_otmq37UedZwiiOXwoBA",
+  };
+  res.status(200).json({ config: json });
 });
 
 app.post("/pushNotification", (req, res) => {
