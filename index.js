@@ -16,17 +16,17 @@ app.get("/", (req, res) => {
 
 app.get("/firebaseConfigKey", (req, res) => {
   const json = {
-    apiKey: "AIzaSyAen2FnXy-gKlxgeHZSgTpr-dAUsD9X7bM",
-    projectId: "eugene-fcm",
-    messagingSenderId: "909731893166",
-    appId: "1:909731893166:web:b18c5a0cdc2fcff00c823f",
+    apiKey: process.env.APIKEY,
+    projectId: process.env.PROJECTID,
+    messagingSenderId: process.env.MESSAGINGSENDERID,
+    appId: process.env.APPID,
   };
   res.status(200).json({ config: json });
 });
 
 app.get("/firebasevapidkey", (req, res) => {
   const json = {
-    vapidKey: "BI4vxOcRLneYRWuOhoaXWLTdYmY4xChF_XudMLNyW1wreBM9kE3bdEA66AAiQPRuTvo_otmq37UedZwiiOXwoBA",
+    vapidKey: process.env.VAPIDKEY,
   };
   res.status(200).json({ config: json });
 });
