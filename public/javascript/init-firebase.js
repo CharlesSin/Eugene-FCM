@@ -1,11 +1,17 @@
+function fetchGetMethod(url) {
+  return fetch("http://example.com/movies.json")
+    .then((response) => response.json())
+    .then((data) => data)
+    .catch((err) => console.error(err));
+}
+console.log(fetchGetMethod("https://eugene-fcm.vercel.app/firebaseConfigKey"));
+console.log(fetchGetMethod("https://eugene-fcm.vercel.app/firebasevapidkey"));
+
 const firebaseConfig = {
   apiKey: "AIzaSyAen2FnXy-gKlxgeHZSgTpr-dAUsD9X7bM",
-  authDomain: "eugene-fcm.firebaseapp.com",
   projectId: "eugene-fcm",
-  storageBucket: "eugene-fcm.appspot.com",
   messagingSenderId: "909731893166",
   appId: "1:909731893166:web:b18c5a0cdc2fcff00c823f",
-  measurementId: "G-R11CEBM1QC",
 };
 
 async function getVisitorData() {
