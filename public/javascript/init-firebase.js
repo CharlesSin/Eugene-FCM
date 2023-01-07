@@ -1,5 +1,5 @@
 function fetchGetMethod(url) {
-  return fetch("http://example.com/movies.json")
+  return fetch(url)
     .then((response) => response.json())
     .then((data) => data)
     .catch((err) => console.error(err));
