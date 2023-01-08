@@ -50,10 +50,6 @@ app.post("/sendbytoken", (req, res) => {
       console.log(responseData); // JSON data parsed by `data.json()` call
       res.status(200).json({ msg, fcmMsgObject, responseData });
     })
-    .catch((err) => {
-      res.status(501).json({ msg, fcmMsgObject, err });
-    });
-  // res.status(200).json({ msg, fcmMsgObject });
 });
 
 const PORT = process.env.PORT || 8282;
