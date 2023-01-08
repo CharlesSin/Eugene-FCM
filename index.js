@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
+const axios = require("axios");
 const app = express();
 
 require("dotenv").config();
@@ -31,24 +32,17 @@ app.get("/firebasevapidkey", (req, res) => {
   res.status(200).json({ config: json });
 });
 
-// Example POST method implementation:
-async function fetchPostData(url = "", data = {}) {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: process.env.FCM_SERVER_KEY,
-    },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
-  // return response.json(); // parses JSON response into native JavaScript objects
-  return response; // parses JSON response into native JavaScript objects
+function postData(uri = "", data = {}) {
+  return axios
+    .post(uri, data)
+    .then(function (response) {
+      console.log(response);
+      return response;
+    })
+    .catch(function (error) {
+      console.log(error);
+      return error;
+    });
 }
 
 app.post("/sendbytoken", (req, res) => {
@@ -59,15 +53,15 @@ app.post("/sendbytoken", (req, res) => {
     data: { msgTitle: msgTitle, msgBody: msgBody, openUri: openUri, imageUri: imageUri },
   };
 
-  // postData("https://fcm.googleapis.com/fcm/send", fcmMsgObject)
-  //   .then((responseData) => {
-  //     console.log(responseData); // JSON data parsed by `data.json()` call
-  //     res.status(200).json({ msg, fcmMsgObject, responseData });
-  //   })
-  //   .catch((err) => {
-  //     res.status(501).json({ msg, fcmMsgObject, err });
-  //   });
-  res.status(200).json({ msg, fcmMsgObject });
+  postData("https://fcm.googleapis.com/fcm/send", fcmMsgObject)
+    .then((responseData) => {
+      console.log(responseData); // JSON data parsed by `data.json()` call
+      res.status(200).json({ msg, fcmMsgObject, responseData });
+    })
+    .catch((err) => {
+      res.status(501).json({ msg, fcmMsgObject, err });
+    });
+  // res.status(200).json({ msg, fcmMsgObject });
 });
 
 const PORT = process.env.PORT || 8282;
