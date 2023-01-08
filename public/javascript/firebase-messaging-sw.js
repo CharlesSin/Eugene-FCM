@@ -1,6 +1,8 @@
 importScripts("https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js");
 importScripts("https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js");
 
+const API_URI = "https://eugene-fcm.vercel.app";
+
 function fetchGetMethod(url) {
   return fetch(url)
     .then((response) => response.json())
@@ -8,12 +10,13 @@ function fetchGetMethod(url) {
     .catch((err) => console.error(err));
 }
 
-setTimeout(() => {
+setTimeout(async () => {
+  const { config: configKey } = await fetchGetMethod(`${API_URI}/firebaseConfigKey`);
   firebase.initializeApp({
-    apiKey: "AIzaSyAen2FnXy-gKlxgeHZSgTpr-dAUsD9X7bM",
-    projectId: "eugene-fcm",
-    messagingSenderId: "909731893166",
-    appId: "1:909731893166:web:b18c5a0cdc2fcff00c823f",
+    apiKey: `${configKey.apiKey}`,
+    projectId: `${configKey.projectId}`,
+    messagingSenderId: `${configKey.messagingSenderId}`,
+    appId: `${configKey.appId}`,
   });
 
   firebase.messaging().onBackgroundMessage((payload) => {

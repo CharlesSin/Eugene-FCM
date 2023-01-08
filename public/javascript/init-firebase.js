@@ -1,3 +1,5 @@
+const API_URI = "https://eugene-fcm.vercel.app";
+
 function fetchGetMethod(url) {
   return fetch(url)
     .then((response) => response.json())
@@ -17,11 +19,11 @@ appendHeadScript("https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js");
 appendHeadScript("https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js");
 appendHeadScript("https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js");
 appendHeadScript("https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js");
-appendHeadScript("https://eugene-fcm.vercel.app/javascript/vistor.min.js");
+appendHeadScript(`${API_URI}/javascript/vistor.min.js`);
 
 setTimeout(async () => {
-  const { config: configKey } = await fetchGetMethod("https://eugene-fcm.vercel.app/firebaseConfigKey");
-  const { config: vapidKey } = await fetchGetMethod("https://eugene-fcm.vercel.app/firebasevapidkey");
+  const { config: configKey } = await fetchGetMethod(`${API_URI}/firebaseConfigKey`);
+  const { config: vapidKey } = await fetchGetMethod(`${API_URI}/firebasevapidkey`);
 
   const firebaseConfig = {
     apiKey: `${configKey.apiKey}`,
