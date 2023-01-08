@@ -59,14 +59,15 @@ app.post("/sendbytoken", (req, res) => {
     data: { msgTitle: msgTitle, msgBody: msgBody, openUri: openUri, imageUri: imageUri },
   };
 
-  postData("https://fcm.googleapis.com/fcm/send", fcmMsgObject)
-    .then((responseData) => {
-      console.log(responseData); // JSON data parsed by `data.json()` call
-      res.status(200).json({ msg, fcmMsgObject, responseData });
-    })
-    .catch((err) => {
-      res.status(501).json({ msg, fcmMsgObject, err });
-    });
+  // postData("https://fcm.googleapis.com/fcm/send", fcmMsgObject)
+  //   .then((responseData) => {
+  //     console.log(responseData); // JSON data parsed by `data.json()` call
+  //     res.status(200).json({ msg, fcmMsgObject, responseData });
+  //   })
+  //   .catch((err) => {
+  //     res.status(501).json({ msg, fcmMsgObject, err });
+  //   });
+  res.status(200).json({ msg, fcmMsgObject });
 });
 
 const PORT = process.env.PORT || 8282;
