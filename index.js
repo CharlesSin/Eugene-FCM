@@ -3,6 +3,8 @@ const path = require("path");
 const cors = require("cors");
 const app = express();
 
+const fcmAPI = require("./routes/fcm-api");
+
 require("dotenv").config();
 
 app.use(express.json({ extended: false }));
@@ -10,36 +12,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
 
+app.use("/firebase", fcmAPI);
+
 app.get("/", (req, res) => {
   res.status(200).json({ msg: "done" });
-});
-
-app.get("/firebaseConfigKey", (req, res) => {
-  const json = {
-    apiKey: process.env.APIKEY,
-    projectId: process.env.PROJECTID,
-    messagingSenderId: process.env.MESSAGINGSENDERID,
-    appId: process.env.APPID,
-  };
-  res.status(200).json({ config: json });
-});
-
-app.get("/firebasevapidkey", (req, res) => {
-  const json = {
-    vapidKey: process.env.VAPIDKEY,
-  };
-  res.status(200).json({ config: json });
-});
-
-app.post("/sendbytoken", async (req, res) => {
-  const { fcmToken, msgTitle, msgBody, openUri, imageUri } = req.body;
-  const msg = "This is a Middle api.";
-  const fcmMsgObject = {
-    to: fcmToken,
-    data: { msgTitle: msgTitle, msgBody: msgBody, openUri: openUri, imageUri: imageUri },
-  };
-
-  res.status(200).json({ msg, fcmMsgObject });
 });
 
 const PORT = process.env.PORT || 8282;
