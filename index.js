@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-const fetch = require("node-fetch");
+const customfetch = require("node-fetch");
 const app = express();
 
 require("dotenv").config();
@@ -33,14 +33,13 @@ app.get("/firebasevapidkey", (req, res) => {
 });
 
 async function postData(uri = "", data = {}) {
-  const response = await fetch(uri, {
+  const response = await customfetch(uri, {
     method: "post",
     body: JSON.stringify(data),
     headers: { "Content-Type": "application/json", Authorization: process.env.FCM_SERVER_TOKEN },
   });
-  const data = await response.json();
 
-  return data;
+  return response.json();
 }
 
 app.post("/sendbytoken", (req, res) => {
