@@ -34,7 +34,7 @@ app.get("/firebasevapidkey", (req, res) => {
 
 function postData(uri = "", data = {}) {
   return axios
-    .post(uri, { headers: { Authorization: process.env.FCM_SERVER_KEY, "Content-Type": "application/json" } }, data)
+    .post(uri, data, { headers: { Authorization: process.env.FCM_SERVER_KEY, "Content-Type": "application/json" } })
     .then(function (response) {
       console.log(response);
       return response;
