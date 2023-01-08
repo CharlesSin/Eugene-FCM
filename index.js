@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-const axios = require("axios");
+const fetch = require("node-fetch");
 const app = express();
 
 require("dotenv").config();
@@ -32,9 +32,15 @@ app.get("/firebasevapidkey", (req, res) => {
   res.status(200).json({ config: json });
 });
 
-function postData(uri = "", data = {}) {
-  return axios
-    .post(uri, data, { headers: { Authorization: process.env.FCM_SERVER_KEY, "Content-Type": "application/json" } })
+async function postData(uri = "", data = {}) {
+  const response = await fetch(uri, {
+    method: "post",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json", Authorization: process.env.FCM_SERVER_TOKEN },
+  });
+  const data = await response.json();
+
+  return data;
 }
 
 app.post("/sendbytoken", (req, res) => {
@@ -45,11 +51,10 @@ app.post("/sendbytoken", (req, res) => {
     data: { msgTitle: msgTitle, msgBody: msgBody, openUri: openUri, imageUri: imageUri },
   };
 
-  postData("https://fcm.googleapis.com/fcm/send", fcmMsgObject)
-    .then((responseData) => {
-      console.log(responseData); // JSON data parsed by `data.json()` call
-      res.status(200).json({ msg, fcmMsgObject, responseData });
-    })
+  postData("https://fcm.googleapis.com/fcm/send", fcmMsgObject).then((responseData) => {
+    console.log(responseData); // JSON data parsed by `data.json()` call
+    res.status(200).json({ msg, fcmMsgObject, responseData });
+  });
 });
 
 const PORT = process.env.PORT || 8282;
