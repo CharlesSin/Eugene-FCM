@@ -34,7 +34,9 @@ setTimeout(async () => {
     "notificationclick",
     function (event) {
       event.notification.close();
-      if (event.notification.url) {
+      console.log("event.notification.url: ");
+      console.log(event.notification);
+      if (event.notification.url !== "") {
         self.clients.openWindow(event.notification.url).then((windowClient) => (windowClient ? windowClient.focus() : null));
       }
     },
