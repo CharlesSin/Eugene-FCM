@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-const customfetch = require("node-fetch");
 const app = express();
 
 require("dotenv").config();
@@ -34,19 +33,13 @@ app.get("/firebasevapidkey", (req, res) => {
 
 app.post("/sendbytoken", async (req, res) => {
   const { fcmToken, msgTitle, msgBody, openUri, imageUri } = req.body;
-  const msg = "HELLO WORLD";
+  const msg = "This is a Middle api.";
   const fcmMsgObject = {
     to: fcmToken,
     data: { msgTitle: msgTitle, msgBody: msgBody, openUri: openUri, imageUri: imageUri },
   };
 
-  customfetch("https://fcm.googleapis.com/fcm/send", {
-    method: "POST",
-    body: JSON.stringify(fcmMsgObject),
-    headers: { "Content-Type": "application/json", Authorization: process.env.FCM_SERVER_TOKEN },
-  }).then((responseData) => {
-    res.status(200).json({ msg, fcmMsgObject, responseData });
-  });
+  res.status(200).json({ msg, fcmMsgObject });
 });
 
 const PORT = process.env.PORT || 8282;
