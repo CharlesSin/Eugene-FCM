@@ -55,8 +55,7 @@ setTimeout(async () => {
       .then((currentToken) => {
         if (currentToken) {
           document.querySelector("#token").textContent = currentToken;
-          firebase
-            .firestore()
+          firebase.firestore()
             .collection("online-users")
             .add({
               token: `${currentToken}`,
