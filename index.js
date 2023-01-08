@@ -41,7 +41,7 @@ app.post("/sendbytoken", async (req, res) => {
   };
 
   customfetch("https://fcm.googleapis.com/fcm/send", {
-    method: "post",
+    method: "POST",
     body: JSON.stringify(fcmMsgObject),
     headers: { "Content-Type": "application/json", Authorization: process.env.FCM_SERVER_TOKEN },
   }).then((responseData) => {
