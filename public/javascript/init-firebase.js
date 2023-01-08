@@ -62,6 +62,7 @@ setTimeout(async () => {
               token: `${currentToken}`,
               visitor: `${visitorId}`,
               created: `${new Date().getTime()}`,
+              registerWebsite: `${window.location.href}`,
             })
             .catch((error) => {
               console.error("Error adding document: ", error);
