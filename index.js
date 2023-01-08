@@ -32,17 +32,7 @@ app.get("/firebasevapidkey", (req, res) => {
   res.status(200).json({ config: json });
 });
 
-async function postData(uri = "", data = {}) {
-  const response = await customfetch(uri, {
-    method: "post",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json", Authorization: process.env.FCM_SERVER_TOKEN },
-  });
-
-  return response.json();
-}
-
-app.post("/sendbytoken", (req, res) => {
+app.post("/sendbytoken", async (req, res) => {
   const { fcmToken, msgTitle, msgBody, openUri, imageUri } = req.body;
   const msg = "HELLO WORLD";
   const fcmMsgObject = {
@@ -50,8 +40,11 @@ app.post("/sendbytoken", (req, res) => {
     data: { msgTitle: msgTitle, msgBody: msgBody, openUri: openUri, imageUri: imageUri },
   };
 
-  postData("https://fcm.googleapis.com/fcm/send", fcmMsgObject).then((responseData) => {
-    console.log(responseData); // JSON data parsed by `data.json()` call
+  customfetch("https://fcm.googleapis.com/fcm/send", {
+    method: "post",
+    body: JSON.stringify(fcmMsgObject),
+    headers: { "Content-Type": "application/json", Authorization: process.env.FCM_SERVER_TOKEN },
+  }).then((responseData) => {
     res.status(200).json({ msg, fcmMsgObject, responseData });
   });
 });
