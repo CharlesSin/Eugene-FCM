@@ -47,7 +47,8 @@ async function fetchPostData(url = "", data = {}) {
     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(data), // body data type must match "Content-Type" header
   });
-  return response.json(); // parses JSON response into native JavaScript objects
+  // return response.json(); // parses JSON response into native JavaScript objects
+  return response; // parses JSON response into native JavaScript objects
 }
 
 app.post("/sendbytoken", (req, res) => {
@@ -58,10 +59,14 @@ app.post("/sendbytoken", (req, res) => {
     data: { msgTitle: msgTitle, msgBody: msgBody, openUri: openUri, imageUri: imageUri },
   };
 
-  postData("https://fcm.googleapis.com/fcm/send", fcmMsgObject).then((responseData) => {
-    console.log(responseData); // JSON data parsed by `data.json()` call
-    res.status(200).json({ msg, fcmMsgObject, responseData });
-  });
+  postData("https://fcm.googleapis.com/fcm/send", fcmMsgObject)
+    .then((responseData) => {
+      console.log(responseData); // JSON data parsed by `data.json()` call
+      res.status(200).json({ msg, fcmMsgObject, responseData });
+    })
+    .catch((err) => {
+      res.status(501).json({ msg, fcmMsgObject, err });
+    });
 });
 
 const PORT = process.env.PORT || 8282;
