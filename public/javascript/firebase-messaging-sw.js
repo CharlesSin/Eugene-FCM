@@ -24,7 +24,7 @@ setTimeout(async () => {
     const notificationOptions = {
       body: `Body: ${payload.data.msgBody}`,
       icon: payload.data.imageUri,
-      url: payload.data.openUri,
+      data: { link: `${payload.data.openUri}` },
     };
 
     self.registration.showNotification(notificationTitle, notificationOptions);
@@ -36,9 +36,7 @@ setTimeout(async () => {
       event.notification.close();
       console.log("event.notification.url: ");
       console.log(event.notification);
-      if (event.notification.url !== "") {
-        self.clients.openWindow(event.notification.url).then((windowClient) => (windowClient ? windowClient.focus() : null));
-      }
+      clients.openWindow(event.notification.data.link).then((windowClient) => (windowClient ? windowClient.focus() : null));
     },
     false
   );

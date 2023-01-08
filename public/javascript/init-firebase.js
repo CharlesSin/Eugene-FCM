@@ -103,4 +103,4 @@ setTimeout(async () => {
   messaging.onMessage((payload) => {
     console.log("Message received. ", payload);
   });
-}, 500);
+}, 1000);
