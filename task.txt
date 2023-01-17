@@ -1,0 +1,7 @@
+TODO: 
+1. Choose Database (Firestore or MongoDB)
+2. Add database config
+3. Add database connection
+4. Create CRUD function
+5. Add logger
+6. Create dashboard for user management
