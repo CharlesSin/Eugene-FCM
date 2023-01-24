@@ -15,6 +15,10 @@ const PORT = process.env.PORT || 8282;
 
 require("dotenv").config();
 
+const dbConnect = require("./config/dbConnect");
+
+dbConnect();
+
 // custom middleware logger
 app.use(logger);
 

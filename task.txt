@@ -1,7 +1,7 @@
 TODO: 
-1. Choose Database (Firestore or MongoDB)
-2. Add database config
-3. Add database connection
-4. Create CRUD function
-5. Add logger
-6. Create dashboard for user management
+1. Choose Database (Firestore or MongoDB) [Done] I'm Using MongoDB as my Database.
+2. Add database config [Done] I'm set up all config info in .env file.
+3. Add database connection [Done] Database Connection Source code & Setting in dbConnect.js 
+4. Create CRUD function [Done] Basic Auth CRUD & Employee Auth CRUD
+5. Add logger [Done]
+6. Create dashboard for user management [Process]
