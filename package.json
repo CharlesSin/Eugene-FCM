@@ -21,6 +21,7 @@
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.40",
     "mongoose": "^6.7.0",
+    "request": "^2.88.2",
     "uuid": "^9.0.0"
   }
 }

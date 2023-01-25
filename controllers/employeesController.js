@@ -1,12 +1,5 @@
 const employeeService = require("../services/EmployeeService");
 
-const data = {
-  employees: require("../models/employees.json"),
-  setEmployees: function (data) {
-    this.employees = data;
-  },
-};
-
 const getAllEmployees = async (req, res) => {
   const employees = await employeeService.getAllEmployees();
   res.status(201).json({ employees });

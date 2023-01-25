@@ -3,13 +3,6 @@ require("dotenv").config();
 
 const userService = require("../services/UserService");
 
-const usersDB = {
-  users: require("../models/users.json"),
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
-
 const handleRefreshToken = async (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.sendStatus(401);

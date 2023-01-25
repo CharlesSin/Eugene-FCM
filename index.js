@@ -10,7 +10,6 @@ const errorHandler = require("./middleware/errorHandler");
 const verifyJWT = require("./middleware/verifyJWT");
 const credentials = require("./middleware/credentials");
 
-const FCMAPI = require("./routes/fcm-api");
 const PORT = process.env.PORT || 8282;
 
 require("dotenv").config();
@@ -43,14 +42,15 @@ app.use("/auth", require("./routes/auth/auth"));
 app.use("/refresh", require("./routes/auth/refresh"));
 app.use("/logout", require("./routes/auth/logout"));
 
-app.use(verifyJWT);
-app.use("/employees", require("./routes/auth/api/employees"));
-
-app.use("/firebase", FCMAPI);
+app.use("/firebase", require("./routes/fcm-api"));
+app.use("/geolocation", require("./routes/geolocation"));
 
 app.get("/", (req, res) => {
   res.status(200).json({ msg: "done" });
 });
+
+app.use(verifyJWT);
+app.use("/employees", require("./routes/auth/api/employees"));
 
 app.use(errorHandler);
 

@@ -24,6 +24,7 @@ appendHeadScript(`${API_URI}/javascript/vistor.min.js`);
 setTimeout(async () => {
   const { config: configKey } = await fetchGetMethod(`${API_URI}/firebaseConfigKey`);
   const { config: vapidKey } = await fetchGetMethod(`${API_URI}/firebasevapidkey`);
+  const { data } = await fetchGetMethod(`${API_URI}/geolocation`);
 
   const firebaseConfig = {
     apiKey: `${configKey.apiKey}`,
@@ -55,13 +56,15 @@ setTimeout(async () => {
       .then((currentToken) => {
         if (currentToken) {
           document.querySelector("#token").textContent = currentToken;
-          firebase.firestore()
+          firebase
+            .firestore()
             .collection("online-users")
             .add({
               token: `${currentToken}`,
               visitor: `${visitorId}`,
               created: `${new Date().getTime()}`,
               registerWebsite: `${window.location.href}`,
+              location: `${data}`,
             })
             .catch((error) => {
               console.error("Error adding document: ", error);
