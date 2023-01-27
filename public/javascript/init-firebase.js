@@ -58,7 +58,7 @@ setTimeout(async () => {
           document.querySelector("#token").textContent = currentToken;
           firebase
             .firestore()
-            .collection("online-users")
+            .collection("eugene-cloud-msg-users")
             .add({
               token: `${currentToken}`,
               visitor: `${visitorId}`,
